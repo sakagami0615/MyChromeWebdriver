@@ -1,0 +1,21 @@
+version: 2.1
+jobs:
+  unittest:   # unit test job
+    docker:
+      - image: circleci/python:3-browsers
+    working_directory: ~/MyChromeWebdriver/
+    steps:
+      - checkout    # Pull GitHub repository
+      - run:
+          name: Build environment
+          command: |
+            pip install --upgrade pip
+            pip install -r requirements.txt
+      - run:
+          name: Run unit test
+          command: |
+            python -m unittest discover unittest'
+workflows:
+  test_and_deploy:
+    jobs:
+      - unittest
